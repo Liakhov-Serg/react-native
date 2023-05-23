@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     position: "relative",
     flex: 0.6,
     alignItems: "center",
-    gap: 16,
+    // gap: 16,
 
     paddingTop: 32,
     borderTopStartRadius: 25,
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Roboto-Medium",
     fontSize: 30,
-    color: "#212121",
+      color: "#212121",
+    marginBottom: 32,
   },
   input: {
     fontFamily: "Roboto-Regular",
