@@ -5,13 +5,16 @@ import {
     Pressable,
     StyleSheet,
     TextInput,
-    // KeyboardAvoidingView
+    KeyboardAvoidingView
 } from "react-native";
 
 export const LoginScreen = () => {
 
     const [passwordView, setPasswordView] = useState(true);
     const [inputFocus, setInputFocus] = useState({});
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handlePress = () => {
         setPasswordView(!passwordView);
@@ -25,41 +28,57 @@ export const LoginScreen = () => {
         setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: false }));
     };
 
+    const onLogin = () => {
+      console.log("Email:", email, "Password:", password);
+    };
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Увійти</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Увійти</Text>
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <TextInput
+            style={[styles.input, inputFocus["input1"] && styles.inputFocused]}
+            onFocus={() => handleFocus("input1")}
+            onBlur={() => handleBlur("input1")}
+            placeholderTextColor="#BDBDBD"
+            placeholder="Електронна адреса"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <View style={{ position: "relative" }}>
             <TextInput
-                style={[styles.input, inputFocus["input1"] && styles.inputFocused]}
-                onFocus={() => handleFocus("input1")}
-                onBlur={() => handleBlur("input1")}
-                placeholderTextColor="#BDBDBD"
-                placeholder="Електронна адреса"
+              style={[
+                styles.input,
+                inputFocus["input2"] && styles.inputFocused,
+              ]}
+              onFocus={() => handleFocus("input2")}
+              onBlur={() => handleBlur("input2")}
+              autoComplete="password"
+              secureTextEntry={passwordView}
+              placeholder="Пароль"
+              placeholderTextColor="#BDBDBD"
+              value={password}
+              onChangeText={setPassword}
             />
-            <View style={{ position: "relative" }}>
-                <TextInput
-                    style={[styles.input, inputFocus["input2"] && styles.inputFocused]}
-                    onFocus={() => handleFocus("input2")}
-                    onBlur={() => handleBlur("input2")}
-                    autoComplete="password"
-                    secureTextEntry={passwordView}
-                    placeholder="Пароль"
-                    placeholderTextColor="#BDBDBD"
-                />
-                <Text
-                    style={styles.passwordView}
-                    dataDetectorType="link"
-                    onPress={handlePress}
-                >
-                    Показати
-                </Text>
-            </View>
-            <Pressable style={styles.button}>
-                <Text style={styles.textButton}>Увійти</Text>
-            </Pressable>
-            <Text style={styles.link} dataDetectorType="link">
-                Немає акаунта?Зареєструватися
+            <Text
+              style={styles.passwordView}
+              dataDetectorType="link"
+              onPress={handlePress}
+            >
+              Показати
             </Text>
-        </View>
+          </View>
+        </KeyboardAvoidingView>
+        <Pressable style={styles.button}>
+          <Text style={styles.textButton}>Увійти</Text>
+        </Pressable>
+        <Text style={styles.link} dataDetectorType="link">
+          Немає акаунта?Зареєструватися
+        </Text>
+      </View>
     );
 };
 
