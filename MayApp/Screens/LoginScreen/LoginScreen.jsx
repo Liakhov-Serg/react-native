@@ -37,7 +37,7 @@ export const LoginScreen = () => {
         <Text style={styles.title}>Увійти</Text>
 
         <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        //   behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <TextInput
             style={[styles.input, inputFocus["input1"] && styles.inputFocused]}
@@ -87,20 +87,16 @@ const styles = StyleSheet.create({
     position: "relative",
     flex: 0.6,
     alignItems: "center",
-    // gap: 16,
-
     paddingTop: 32,
     borderTopStartRadius: 25,
     borderTopEndRadius: 25,
-
     backgroundColor: "#FFFFFF",
   },
 
   title: {
     fontFamily: "Roboto-Medium",
     fontSize: 30,
-      color: "#212121",
-    marginBottom: 32,
+    color: "#212121",
   },
   input: {
     fontFamily: "Roboto-Regular",
@@ -108,6 +104,7 @@ const styles = StyleSheet.create({
     color: "#212121",
 
     backgroundColor: "#F6F6F6",
+    marginBottom: 16,
     marginHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 15,
@@ -150,5 +147,6 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Regular",
     fontSize: 16,
     color: "#1B4371",
+    marginTop: 16,
   },
 });
