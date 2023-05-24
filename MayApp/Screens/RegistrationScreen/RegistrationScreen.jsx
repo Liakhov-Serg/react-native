@@ -1,40 +1,44 @@
 // import SvgUri from 'react-native-svg-uri';
 import React, { useState } from "react";
 import {
-  Image,
+    Image,
+    KeyboardAvoidingView,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
-import Add from "../../img/AddPhoto.svg";
-import Del from "../../img/del.svg";
+import Add from "../../images/AddPhoto.svg";
+import Del from "../../images/del.svg";
 
 export const RegistrationScreen = () => {
   const [passwordView, setPasswordView] = useState(true);
   const [avatarSource, setAvatarSource] = useState(null);
   const [inputFocus, setInputFocus] = useState({});
-
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handlePress = () => {
     setPasswordView(!passwordView);
   };
-
   const addImg = () => {};
   const delImg = () => {
     setAvatarSource(null);
   };
-
   const handleFocus = (inputName) => {
     setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: true }));
   };
-
   const handleBlur = (inputName) => {
     setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: false }));
   };
 
+  const onLogin = () => {
+    console.log("Login:", login, "Email:", email, "Password:", password);
+  };
+
   return (
-    <View style={styles.container} behavior="padding">
+    <View style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image source={{ uri: avatarSource }} style={styles.avatar} />
         {avatarSource ? (
@@ -50,46 +54,54 @@ export const RegistrationScreen = () => {
 
       <Text style={styles.title}>Реєстрація</Text>
 
-      <TextInput
-        placeholderTextColor="#BDBDBD"
-        placeholder="Логін"
-        style={[styles.input, inputFocus["input1"] && styles.inputFocused]}
-        onFocus={() => handleFocus("input1")}
-        onBlur={() => handleBlur("input1")}
-      />
-      <TextInput
-        placeholderTextColor="#BDBDBD"
-        placeholder="Електронна адреса"
-        style={[styles.input, inputFocus["input2"] && styles.inputFocused]}
-        onFocus={() => handleFocus("input2")}
-        onBlur={() => handleBlur("input2")}
-      />
-
-      <View style={{ position: "relative" }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
         <TextInput
-          autoComplete="password"
-          secureTextEntry={passwordView}
-          placeholder="Пароль"
-          style={[styles.input, inputFocus["input3"] && styles.inputFocused]}
-          onFocus={() => handleFocus("input3")}
-          onBlur={() => handleBlur("input3")}
+          placeholderTextColor="#BDBDBD"
+          placeholder="Логін"
+          value={login}
+          onChangeText={setLogin}
+          style={[styles.input, inputFocus["input1"] && styles.inputFocused]}
+          onFocus={() => handleFocus("input1")}
+          onBlur={() => handleBlur("input1")}
         />
-
-        <Text
-          style={styles.passwordView}
-          dataDetectorType="link"
-          onPress={handlePress}
-          onPre
-        >
-          Показати
-        </Text>
-      </View>
-
-      <Pressable style={styles.button}>
+        <TextInput
+          placeholderTextColor="#BDBDBD"
+          placeholder="Електронна адреса"
+          value={email}
+          onChangeText={setEmail}
+          style={[styles.input, inputFocus["input2"] && styles.inputFocused]}
+          onFocus={() => handleFocus("input2")}
+          onBlur={() => handleBlur("input2")}
+        />
+        <View style={{ position: "relative" }}>
+          <TextInput
+            autoComplete="password"
+            secureTextEntry={passwordView}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Пароль"
+            style={[styles.input, inputFocus["input3"] && styles.inputFocused]}
+            onFocus={() => handleFocus("input3")}
+            onBlur={() => handleBlur("input3")}
+          />
+          <Text
+            style={styles.passwordView}
+            dataDetectorType="link"
+            onPress={handlePress}
+          >
+            Показати
+          </Text>
+        </View>
+          </KeyboardAvoidingView>
+          
+      <Pressable style={styles.button} onPress={onLogin}>
         <Text style={styles.textButton}>Зареєструватися</Text>
       </Pressable>
+
       <Text style={styles.link} dataDetectorType="link">
-        Вже є акаунт?Увійти
+        Вже є акаунт? Увійти
       </Text>
     </View>
   );
@@ -98,14 +110,12 @@ export const RegistrationScreen = () => {
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    flex: 0.6,
+    flex: 0.67,
     alignItems: "center",
     // gap: 16,
-
     paddingTop: 92,
     borderTopStartRadius: 25,
     borderTopEndRadius: 25,
-
     backgroundColor: "#FFFFFF",
   },
   avatarContainer: {
@@ -123,7 +133,6 @@ const styles = StyleSheet.create({
   },
   imgIcon: {
     position: "absolute",
-
     top: -80,
     left: 45,
     width: 25,
@@ -154,16 +163,15 @@ const styles = StyleSheet.create({
   },
   inputFocused: {
     borderColor: "#FF6C00",
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
   },
   passwordView: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
-
     position: "absolute",
     top: 13,
     left: 270,
-
     fontSize: 16,
     color: "#1B4371",
   },
@@ -179,14 +187,12 @@ const styles = StyleSheet.create({
   textButton: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
-
     textAlign: "center",
     color: "#FFFFFF",
   },
   link: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
-
     color: "#1B4371",
   },
 });

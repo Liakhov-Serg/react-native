@@ -1,6 +1,4 @@
 import { useFonts } from "expo-font";
-
-// import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
   Text,
@@ -11,7 +9,9 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { RegistrationScreen } from "./Screens/RegistrationScreen/RegistrationScreen";
 import { LoginScreen } from "./Screens/LoginScreen/LoginScreen";
+import { PostsScreen } from "./Screens/PostsScreen/PostsScreen";
 
 export default function App() {
   
@@ -23,8 +23,8 @@ export default function App() {
     return null;
   }
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-<View style={styles.container} behavior="padding">
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+     <View style={styles.container}>
     <ImageBackground style={styles.image}
       source={require('./images/photoBG.jpg')}>
       
@@ -52,7 +52,7 @@ export default function App() {
            
     </ImageBackground>
     </View>
-      // </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>
   );
 }
 
