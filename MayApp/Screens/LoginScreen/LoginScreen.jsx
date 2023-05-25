@@ -1,102 +1,158 @@
-import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
-    View,
-    Text,
-    Pressable,
-    StyleSheet,
-    TextInput,
-    KeyboardAvoidingView
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  ImageBackground,
+  Keyboard,
 } from "react-native";
+import BG from "../../images/photoBG.jpg";
 
 export const LoginScreen = () => {
+  const [passwordView, setPasswordView] = useState(true);
+  const [inputFocus, setInputFocus] = useState({});
 
-    const [passwordView, setPasswordView] = useState(true);
-    const [inputFocus, setInputFocus] = useState({});
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [isKeyboardOpen, setKeyboardOpen] = useState(false);
 
-    const handlePress = () => {
-        setPasswordView(!passwordView);
+//   const navigation = useNavigation();
+
+  const handlePress = () => {
+    setPasswordView(!passwordView);
+  };
+
+  const handleFocus = (inputName) => {
+    setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: true }));
+  };
+
+  const handleBlur = (inputName) => {
+    setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: false }));
+  };
+
+  const onLogin = () => {
+    navigation.navigate("Home");
+    console.log("Email:", email, "Password:", password);
+  };
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      handleKeyboardDidShow
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      handleKeyboardDidHide
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
     };
+  }, []);
 
-    const handleFocus = (inputName) => {
-        setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: true }));
-    };
+  const handleKeyboardDidShow = () => {
+    setKeyboardOpen(true);
+  };
 
-    const handleBlur = (inputName) => {
-        setInputFocus((prevFocus) => ({ ...prevFocus, [inputName]: false }));
-    };
+  const handleKeyboardDidHide = () => {
+    setKeyboardOpen(false);
+  };
 
-    const onLogin = () => {
-      console.log("Email:", email, "Password:", password);
-    };
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Увійти</Text>
-
+  return (
+    <View style={styles.mycontainer}>
+      <ImageBackground style={styles.image} source={BG}>
         <KeyboardAvoidingView
         //   behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={{ justifyContent: "flex-end" }}
         >
-          <TextInput
-            style={[styles.input, inputFocus["input1"] && styles.inputFocused]}
-            onFocus={() => handleFocus("input1")}
-            onBlur={() => handleBlur("input1")}
-            placeholderTextColor="#BDBDBD"
-            placeholder="Електронна адреса"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <View style={{ position: "relative" }}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Увійти</Text>
+
             <TextInput
               style={[
                 styles.input,
-                inputFocus["input2"] && styles.inputFocused,
+                inputFocus["input1"] && styles.inputFocused,
               ]}
-              onFocus={() => handleFocus("input2")}
-              onBlur={() => handleBlur("input2")}
-              autoComplete="password"
-              secureTextEntry={passwordView}
-              placeholder="Пароль"
+              onFocus={() => handleFocus("input1")}
+              onBlur={() => handleBlur("input1")}
               placeholderTextColor="#BDBDBD"
-              value={password}
-              onChangeText={setPassword}
+              placeholder="Електронна адреса"
+              value={email}
+              onChangeText={setEmail}
             />
-            <Text
-              style={styles.passwordView}
-              dataDetectorType="link"
-              onPress={handlePress}
-            >
-              Показати
-            </Text>
+            <View style={{ position: "relative" }}>
+              <TextInput
+                style={[
+                  styles.input,
+                  inputFocus["input2"] && styles.inputFocused,
+                ]}
+                onFocus={() => handleFocus("input2")}
+                onBlur={() => handleBlur("input2")}
+                autoComplete="password"
+                secureTextEntry={passwordView}
+                placeholder="Пароль"
+                placeholderTextColor="#BDBDBD"
+                value={password}
+                onChangeText={setPassword}
+              />
+              <Text
+                style={styles.passwordView}
+                dataDetectorType="link"
+                onPress={handlePress}
+              >
+                Показати
+              </Text>
+            </View>
+            {isKeyboardOpen ? null : (
+              <>
+                <Pressable style={styles.button} onPress={onLogin}>
+                  <Text style={styles.textButton}>Увійти</Text>
+                </Pressable>
+
+                <Text
+                  style={styles.link}
+                  dataDetectorType="link"
+                  onPress={() => navigation.navigate("Registration")}
+                >
+                  Немає акаунта?Зареєструватися
+                </Text>
+              </>
+            )}
           </View>
         </KeyboardAvoidingView>
-        <Pressable style={styles.button}>
-          <Text style={styles.textButton}>Увійти</Text>
-        </Pressable>
-        <Text style={styles.link} dataDetectorType="link">
-          Немає акаунта?Зареєструватися
-        </Text>
-      </View>
-    );
+      </ImageBackground>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    position: "relative",
-    flex: 0.6,
+  mycontainer: {
+    flex: 1,
     alignItems: "center",
-    paddingTop: 32,
-    borderTopStartRadius: 25,
-    borderTopEndRadius: 25,
-    backgroundColor: "#FFFFFF",
   },
-
+  container: {
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    width: "100%",
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "flex-end",
+    width: "100%",
+  },
   title: {
     fontFamily: "Roboto-Medium",
     fontSize: 30,
     color: "#212121",
+    marginVertical: 32,
   },
   input: {
     fontFamily: "Roboto-Regular",
@@ -126,6 +182,7 @@ const styles = StyleSheet.create({
     color: "#1B4371",
 
     position: "absolute",
+
     top: 13,
     left: 270,
   },
@@ -135,6 +192,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 100,
+    marginBottom: 27,
   },
   textButton: {
     fontFamily: "Roboto-Regular",
@@ -148,5 +206,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#1B4371",
     marginTop: 16,
+    marginBottom: 144,
   },
 });
