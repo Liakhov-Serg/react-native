@@ -11,7 +11,7 @@ import {
 // import LogOut from "../../img/log-out.svg";
 
 export const PostsScreen = () => {
-//   const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View>
       <View style={styles.container}>
@@ -44,7 +44,5 @@ const styles = StyleSheet.create({
     paddingTop: 92,
     backgroundColor: "#FFFFFF",
   },
-    upContainer: {
-      
-  },
+  upContainer: {},
 });
