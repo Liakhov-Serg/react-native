@@ -7,8 +7,8 @@ import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 import { Logout } from "../../components/LogOut/LogOut";
 import { Goback } from "../../components/GoBack/GoBack";
 import ProfileIcon from "../../img/profile-icon.svg";
-import Addicon from "../../img/new-icon.svg";
-import PublicationIcon from "../../img/publication-icon.svg";
+// import Addicon from "../../img/new-icon.svg";
+// import PublicationIcon from "../../img/publication-icon.svg";
 
 const BottomNavigate = createBottomTabNavigator();
 

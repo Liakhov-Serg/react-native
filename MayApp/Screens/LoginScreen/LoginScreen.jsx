@@ -21,7 +21,7 @@ export const LoginScreen = () => {
 
   const [isKeyboardOpen, setKeyboardOpen] = useState(false);
 
-//   const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const handlePress = () => {
     setPasswordView(!passwordView);

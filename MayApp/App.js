@@ -11,9 +11,18 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+
 import { RegistrationScreen } from "./Screens/RegistrationScreen/RegistrationScreen";
 import { LoginScreen } from "./Screens/LoginScreen/LoginScreen";
-import { PostsScreen } from "./Screens/PostsScreen/PostsScreen";
+// import { PostsScreen } from "./Screens/PostsScreen/PostsScreen";
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+// import { Home } from './Screens/Home/Home';
+// import { MapScreen } from './Screens/MapScreen/MapScreen';
+
+const MainStack = createStackNavigator();
+
 
 export default function App() {
   
@@ -26,14 +35,17 @@ export default function App() {
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-     <View style={styles.container}>
-    <ImageBackground style={styles.image}
-      source={require('./images/photoBG.jpg')}>
-              
-     <LoginScreen/>  
-           
-    </ImageBackground>
-    </View>
+     <NavigationContainer>
+               <MainStack.Navigator
+                  initialRouteName="Registration"
+                  screenOptions={{ headerShown: false }}
+               >
+                  <MainStack.Screen name="Login" component={LoginScreen} />
+                  <MainStack.Screen name="Registration" component={RegistrationScreen} />
+                  {/* <MainStack.Screen name="Home" component={Home} /> */}
+                  {/* <MainStack.Screen name="MapScreen" component={MapScreen} /> */}
+               </MainStack.Navigator>
+            </NavigationContainer>
     </TouchableWithoutFeedback>
   );
 }
